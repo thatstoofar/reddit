@@ -7,14 +7,18 @@
 <body>
   <div id="app">
     <div class='header rounded-0 bg-secondary border border-secondary '>
-    <ul>
-      <li></li>
-      <li></li>
+    <ul class='text-light'>
+      <a v-on:click="setUrl('https://www.reddit.com/r/gaming/new.json')"><li>Gaming</li></a>
+      <a v-on:click="setUrl('https://www.reddit.com/r/Movies/new.json')"><li>Movies</li></a>
+      <a v-on:click="setUrl('https://www.reddit.com/r/AskReddit/new.json')"><li>AskReddit</li></a>
+      <a v-on:click="setUrl('https://www.reddit.com/r/politics/new.json')"><li>Politics</li></a>
+      <a v-on:click="setUrl('https://www.reddit.com/r/worldnews/new.json')"><li>World News</li></a>
+
     </ul>
     </div>
     <nav class="navbar navbar-dark bg-primary rounded-0">
   <!-- Navbar content -->
-      r/movies <!-- {{stories[0].subreddit}} -->
+      r/{{stories[0].subreddit}}
     </nav>
     
     <div class= 'top-bar'>
@@ -150,6 +154,10 @@ export default{
       setLimit: function(limit){
         this.limit[0] = limit
         this.loadStories()
+      },
+      setUrl: function(url){
+        this.url = url
+        this.loadStories()
       }
 
     },
@@ -192,12 +200,13 @@ img{
 
 ul {
   list-style-type: none;
-  padding: 0;
+  padding-top:0.5%;
 }
 
 li {  
   display: inline-block;
-  margin: 50px 0;
+  padding-left: 2%;
+  margin: 0.1% 0;
   white-space: normal;
 }
 
