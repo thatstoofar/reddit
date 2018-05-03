@@ -23,11 +23,10 @@
           <p> <span>{{ story.created_utc | moment("from", "now") }}</span>- {{story.domain}} </p>
           </div> 
         </div> 
-
-      
       </div> 
       </a>
     </div>
+   <div v-infinite-scroll="loadOlderStories" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
   </div>
 </body></html>
 </template>
@@ -35,36 +34,43 @@
 <script>
 export default{
   name: 'app',
+  methods: {
+        loadMore: function() {
+          console.log('inf');
+          this.busy = true;
+          setTimeout(() => { for (var i = 0, j = 10; i < j; i++) {
+            this.data.push({ name: count++ });
+          }
+          this.busy = false;
+        }, 1000);
+
+        },
+
+        loadStories: function(){
+          var stories = [];
+          this.$http.get('https://www.reddit.com/r/popular/new.json').then(response => {
+            response.body.data.children.map(function(value,key){
+              if(!value.data.thumbnail ||value.data.thumbnail === 'self' || value.data.thumbnail ==='default'){
+                value.data.thumbnail = 'http://www.freepngimg.com/thumb/mario/20698-7-mario-transparent-background-thumb.png'
+                console.log('replace')
+              }
+              stories.push(value.data)
+            })
+          })
+          this.stories = stories; 
+        }
+      },
+
   data(){
     return {
       msg: 'Wel',
       stories: [],
       list: [],
-      methods: {
-        loadStories: function(){
-          console.log('hi')
-        }
-      }
     }
 
   },
   mounted(){
-    
-    var stories = [];
-    //console.log(this.stories[0].title)
-      this.$http.get('https://www.reddit.com/r/popular/new.json').then(response => {
-        response.body.data.children.map(function(value,key){
-          if(!value.data.thumbnail ||value.data.thumbnail === 'self' || value.data.thumbnail ==='default'){
-            value.data.thumbnail = 'http://www.freepngimg.com/thumb/mario/20698-7-mario-transparent-background-thumb.png'
-            console.log('replace')
-          }
-          stories.push(value.data)
-        })
-  })
-      this.stories = stories; 
-
-
-
+    this.loadStories();
   }, 
 }
 </script>
@@ -87,6 +93,8 @@ h2 {
 img{
   max-width: 100%;
   max-height: 100%;
+  border:none;
+  outline:none;
 
 }
 

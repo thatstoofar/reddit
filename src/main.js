@@ -4,7 +4,9 @@ import VueResource from 'vue-resource'
 import VueMoment from 'vue-moment'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import * as uiv from 'uiv'
+import infiniteScroll from 'vue-infinite-scroll'
 
+Vue.use(infiniteScroll)
 Vue.use(uiv)
 Vue.use(VueResource);
 Vue.use(require('vue-moment'));
