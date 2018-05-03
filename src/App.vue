@@ -18,11 +18,15 @@
     </div>
     <nav class="navbar navbar-dark bg-primary rounded-0">
   <!-- Navbar content -->
-      r/{{stories[0].subreddit}}
+      <h1 v-if="stories !== null">
+            r/{{stories[0].subreddit}}
+
+      </h1>
+
     </nav>
     
     <div class= 'top-bar'>
-      <div class ='next-page'> 
+      <div class ='next-page'>
         <p>view more:</p>
         <button type="button" class="btn" v-on:click="loadPrevPage">Back</button>
         <button type="button" class="btn" v-on:click="loadOlderStories">Next</button>
@@ -43,7 +47,7 @@
         </div>
         <div class='story-title'>
           <div class='story-text'>
-            <h2>{{story.title}}</h2>
+            <h2>{{story.title  | truncate(70)}}</h2>
             
           </div>
           <div class='time-ago'>
@@ -168,6 +172,7 @@ export default{
   data(){
     return {
       url: 'https://www.reddit.com/r/movies/new.json',
+      text: 'i love potatos',
       stories: [],
       list: [],
       limit: [],

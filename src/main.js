@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import * as uiv from 'uiv'
 import infiniteScroll from 'vue-infinite-scroll'
 
+var VueTruncate = require('vue-truncate-filter')
+
+Vue.use(VueTruncate)
 Vue.use(infiniteScroll)
 Vue.use(uiv)
 Vue.use(VueResource);
