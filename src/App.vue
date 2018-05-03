@@ -6,10 +6,17 @@
 </head>
 <body>
   <div id="app">
-    <nav class="navbar navbar-dark bg-primary">
+    <div class='header rounded-0 bg-secondary border border-secondary '>
+    <ul>
+      <li></li>
+      <li></li>
+    </ul>
+    </div>
+    <nav class="navbar navbar-dark bg-primary rounded-0">
   <!-- Navbar content -->
       r/movies <!-- {{stories[0].subreddit}} -->
     </nav>
+    
     <div class= 'top-bar'>
       <div class ='next-page'> 
         <p>view more:</p>
@@ -55,7 +62,12 @@
         <button type="button" class="btn" v-on:click="setLimit(50)">50</button>
       </div>
     </div>
-
+    <div class='footer rounded-0 bg-secondary border border-secondary '>
+    <ul>
+      <li></li>
+      <li></li>
+    </ul>
+    </div>
 
    <!--<div v-infinite-scroll="loadOlderStories" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div> -->
   </div>
@@ -183,8 +195,8 @@ ul {
   padding: 0;
 }
 
-li {
-  display: block;
+li {  
+  display: inline-block;
   margin: 50px 0;
   white-space: normal;
 }
