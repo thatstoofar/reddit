@@ -42,9 +42,13 @@
           <img v-bind:src=story.thumbnail>
         </div>
         <div class='story-title'>
-          <h2>{{story.title}}</h2>
+          <div class='story-text'>
+            <h2>{{story.title}}</h2>
+            
+          </div>
           <div class='time-ago'>
-          <p> <span>{{ story.created_utc | moment("from", "now") }}</span>- {{story.domain}} </p>
+          <p>submitted  <span>{{ story.created_utc | moment("from", "now") }}</span> by {{story.author}} </p>
+          <span> {{story.domain}} </span>
           </div> 
         </div> 
         </ul>
@@ -259,5 +263,6 @@ p{
 .top-bar{
   display:flex;
 }
+
 
 </style>
