@@ -10,8 +10,18 @@
   <!-- Navbar content -->
       r/popular
     </nav>
-    
-  <div class = 'item'>
+   <!-- <div class ='next-page'> 
+      <p>Limit Number of items:</p>
+      <button type="button" class="btn" v-on:click="loadPrevPage">10</button>
+      <button type="button" class="btn" v-on:click="loadOlderStories">25</button>
+    </div> -->
+    <div class ='next-page'> 
+      <p>view more:</p>
+      <button type="button" class="btn" v-on:click="loadPrevPage">Back</button>
+      <button type="button" class="btn" v-on:click="loadOlderStories">Next</button>
+    </div>
+
+    <div class = 'item'>
       <a class= 'link' a v-bind:href=story.url v-for='story in stories' target='_blank'>
       <div class = 'flex'>
         <div class='thumbnail'> 
@@ -27,13 +37,22 @@
       </div> 
       <hr>
       </a>
-      
+    </div>
+    <div class ='next-page'> 
+      <p>view more:</p>
+      <div class='button-next-page'>
+        <button type="button" class="btn" v-on:click="loadPrevPage">Back</button>
+        <button type="button" class="btn" v-on:click="loadOlderStories">Next</button>
+      </div>
+    </div>
+    <div class ='footer'>
+       Jonathan Yu
     </div>
 
-
-   <div v-infinite-scroll="loadOlderStories" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div>
+   <!--<div v-infinite-scroll="loadOlderStories" infinite-scroll-disabled="busy" infinite-scroll-distance="10"></div> -->
   </div>
-</body></html>
+</body>
+</html>
 </template>
 
 <script>
@@ -54,7 +73,7 @@ export default{
 
         loadStories: function() {
           var stories = [];
-          this.$http.get('https://www.reddit.com/r/popular/new.json').then(response => {
+          this.$http.get('https://www.reddit.com/r/Kappa/new.json').then(response => {
             response.body.data.children.map(function(value,key){
               if(!value.data.thumbnail ||value.data.thumbnail === 'self' || value.data.thumbnail ==='default'){
                 value.data.thumbnail = 'http://www.freepngimg.com/thumb/mario/20698-7-mario-transparent-background-thumb.png'
@@ -68,16 +87,38 @@ export default{
 
         loadOlderStories: function() {
           var stories = [];
-          var params = {};
+          var params = {params:{}};
 
-          params['after'] = 't3_8gr1xe'
 
           console.log([params]);
-          /*
+          
           if(this.stories.length > 0) {
-            params['after'] = this.stories[this.stories.length-1].name;
-          } */
-          this.$http.get('https://www.reddit.com/r/popular/new.json', params).then(response =>{
+            params.params.after = this.stories[this.stories.length-1].name;
+          } 
+          console.log(params)
+          this.$http.get('https://www.reddit.com/r/Kappa/new.json', params).then(response =>{
+            response.body.data.children.map(function(value,key){
+              if(!value.data.thumbnail ||value.data.thumbnail === 'self' || value.data.thumbnail ==='default'){
+                value.data.thumbnail = 'http://www.freepngimg.com/thumb/mario/20698-7-mario-transparent-background-thumb.png'
+              }
+              stories.push(value.data)
+            })
+          })
+          this.stories = stories
+      },
+
+      loadPrevPage: function(){
+        var stories = [];
+        var params = {params:{}};
+
+
+          console.log([params]);
+          
+          if(this.stories.length > 0) {
+            params.params.after = this.stories[0].name;
+          } 
+          console.log(params)
+          this.$http.get('https://www.reddit.com/r/Kappa/new.json', params).then(response =>{
             response.body.data.children.map(function(value,key){
               if(!value.data.thumbnail ||value.data.thumbnail === 'self' || value.data.thumbnail ==='default'){
                 value.data.thumbnail = 'http://www.freepngimg.com/thumb/mario/20698-7-mario-transparent-background-thumb.png'
@@ -87,6 +128,7 @@ export default{
           })
           this.stories = stories
       }
+
     },
   data(){
     return {
@@ -97,7 +139,7 @@ export default{
 
   },
   mounted(){
-    this.loadOlderStories();
+    this.loadStories();
   }, 
 }
 </script>
@@ -174,4 +216,13 @@ p{
     height: auto;
     width: auto;
 }
+.next-page{
+  display: flex;
+  padding-left:1%;
+  padding-bottom:1%;
+}
+.btn{
+  padding-left:5%;
+}
+
 </style>
